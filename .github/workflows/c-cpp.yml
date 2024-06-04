@@ -16,8 +16,7 @@ jobs:
       - name: Build
         run: |
 
-          gmake -j$(sysctl -n hw.physicalcpu) 
-
+          make 
       - name: Upload Artifact
         id: dopamine-latest-upload
         uses: actions/upload-artifact@v3
