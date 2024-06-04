@@ -1,0 +1,28 @@
+name: "*** build for mac ***"
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: macos-13
+    steps:
+      - name: Checkout
+        run: |
+          set -x
+          git clone --recursive https://github.com/guyan5559/ChOma.git ${{ github.workspace }}
+      - name: Build
+        run: |
+
+          gmake -j$(sysctl -n hw.physicalcpu) 
+
+      - name: Upload Artifact
+        id: dopamine-latest-upload
+        uses: actions/upload-artifact@v3
+        with:
+          name: choma mac output
+          path: |
+            ${{ github.workspace }}/output
+          
